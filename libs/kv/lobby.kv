@@ -1,0 +1,25 @@
+<Lobby>
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "./assets/app_bg.png"
+  
+    Carousel:
+        id: board
+        size_hint: .5, 1
+        direction: 'right'
+        loop: True
+        
+        MDLabel:
+            name: 'first'
+            text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+            title:"What is Lorem Ipsum?"
+        MDLabel:
+            name: 'second'
+            text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+            title:"Why do we use it?"
+        MDLabel:
+            name: 'third'
+            text: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
+            title:"Where does it come from?"

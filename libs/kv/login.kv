@@ -1,0 +1,76 @@
+<Loading>:
+    Image:
+        source: './assets/app_logo.png'
+        size_hint:(None, None)
+        size: (350,350)
+        pos:(200, 360)
+        canvas.before:
+            PushMatrix
+            Rotate:
+                angle: root.angle
+                axis: 0, 0, 1
+                origin: self.center
+        canvas.after:
+            PopMatrix
+
+
+<Login>
+    name: 'login'
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "./assets/app_bg.png"
+
+    FloatLayout:
+        Loading:
+
+        MDLabel:
+            text: "[font=./assets/fonts/Rubik-Light.ttf]TRACE[/font]"
+            markup: True
+            pos_hint: {'x': .2}
+            font_size: '128sp'
+            theme_text_color: 'Custom'
+            text_color: rgba('#35353f')
+            pos_hint: {'center_x': .6, 'center_y': .35}
+
+        LoginForm:
+
+
+
+<LoginForm@FloatLayout>
+
+    MDLabel:
+        text: "[font=./assets/fonts/Rubik-Light.ttf]Welcome[/font]"
+        markup: True
+        font_style: 'H1'
+        theme_text_color: 'Custom'
+        text_color: 1,1,1,1
+        pos_hint: {'center_x': 1.15, 'center_y': .7 }
+
+    MDTextFieldRect:
+        font_size: '28sp'
+        size_hint: .3, .05
+        hint_text: "Username or Email"
+        height: "30dp"
+        pos_hint: {'center_x': .75, 'center_y': .5 }
+
+    MDTextFieldRect:
+        font_size: '28sp'
+        hint_text: "Password"
+        size_hint: .3, .05
+        height: "30dp"
+        pos_hint: {'center_x': .75, 'center_y': .4}
+        password: True
+        password_mask: '•'
+
+    MDRaisedButton:
+        text: '[font=./assets/fonts/Rubik-SemiBold.ttf][color=#ffffff]Login[/color][/font]'
+        markup: True
+        elevation: 16
+        md_bg_color: rgba('#09AF79')
+        font_style: 'H5'
+        pos_hint: {'center_x': .75, 'center_y': .3}
+        size_hint: .1, None
+        on_release: print('hello')

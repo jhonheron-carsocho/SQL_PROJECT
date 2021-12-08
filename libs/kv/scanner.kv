@@ -1,0 +1,28 @@
+<Scanner>:
+    name: 'scanner'
+
+    MDGridLayout:
+        rows: 4
+
+        MDLabel:
+            text_color: 0, 0, 1, 1
+            text: "Test Webcam"
+            size_hint: 1, 1
+            halign: 'center'
+        
+        Image:
+            id: cam_respo
+            size_hint: 1, 1
+            allow_strecth: True
+            keep_ratio: True
+
+        MDLabel:
+            text_color: 0, 0, 1, 1
+            text: root.qr_reading
+            size_hint: 1, 1
+            halign: 'center'
+
+        MDFlatButton:
+            text: 'Back'
+            on_release: root.stop_respo()
+            halign: 'center'
