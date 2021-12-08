@@ -2,7 +2,7 @@ from kivy.config import Config
 from kivymd.app import MDApp
 from kivy.lang.builder import Builder
 from kivy.properties import StringProperty, NumericProperty
-from libs.baseclass import login, lobby
+from libs.baseclass import login, scanner, lobby
 from kivy.core.window import Window
 
 

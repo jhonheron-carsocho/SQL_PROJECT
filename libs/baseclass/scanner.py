@@ -10,6 +10,7 @@ from kivy.graphics.texture import Texture
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.properties import StringProperty
+import mysql
 
 Builder.load_file('./libs/kv/scanner.kv')
 
@@ -46,10 +47,19 @@ class Scanner(Screen):
                 
                 print(read_data)
                 if len(read_data) == 4:
-                    self.qr_reading = 'Valid QR Code'
-                    time.sleep(5)
+                    try:
+                        int(read_data[1])
+                        int(read_data[-1])
+                    except (TypeError, ValueError):
+                        self.qr_reading = 'Invalid QR Code'
+                    else:
+                        self.qr_reading = 'Valid QR Code'
+                        self.data_base(read_data)
+                    time.sleep(3)
+
                 else:
                     self.qr_reading = 'Invalid Qr Code'
+                    time.sleep(3)
 
             Clock.schedule_once(partial(self.display_frame, img_flip))
             
@@ -65,3 +75,43 @@ class Scanner(Screen):
         texture.blit_buffer(frame.tobytes(order=None), colorfmt='bgr', bufferfmt='ubyte')
         texture.flip_vertical()
         self.ids.cam_respo.texture = texture
+
+    def data_base(self, data):
+        conn = mysql.connector.connect(
+                    host = '127.0.0.1',
+                    user = 'root',
+                    passwd = 'jiiroo19',
+                    database = 'trial'
+                    )
+        
+        cur = conn.cursor()
+        
+        # creates table and columns inside database
+        cur.execute("""CREATE TABLE IF NOT EXISTS customers (
+                            id MEDIUMINT NOT NULL AUTO_INCREMENT,
+                            PRIMARY KEY (id),
+                            name varchar(255),
+                            age int,
+                            address varchar (255),
+                            number text,
+                            time_in datetime,
+                            time_out datetime,
+                            status text)
+                            """)
+        
+        dt = time.strftime("%Y-%m-%d %H:%M:%S")
+        
+        cur.execute(f"SELECT name FROM customers WHERE name = '{data[0]}' AND status = 'In'")
+        res = cur.fetchall()
+        
+        if len(res) == 1:
+            cur.execute(f"UPDATE customers SET time_out = '{dt}', status = 'Out'")
+            
+        else:
+            cur.execute(f"""INSERT INTO customers (name, age, address, number,
+                                 time_in, time_out, status) VALUES 
+                                 (%s, %s, %s, %s, '{dt}', NULL, 'In')
+                                 """, data)
+
+        conn.commit()
+        conn.close()
