@@ -1,25 +1,88 @@
+
+
 <Lobby>
+    name: 'lobby'
+
     canvas.before:
         Rectangle:
             pos: self.pos
             size: self.size
             source: "./assets/app_bg.png"
-  
-    Carousel:
-        id: board
-        size_hint: .5, 1
-        direction: 'right'
-        loop: True
-        
+
+    FloatLayout:
+        ColoredLabel:
+            text: '10000'
+            font_name: './assets/fonts/Rubik-Medium.ttf'
+            font_size: '40sp'
+            size_hint: None,None
+
+        RightSide:
+
+
         MDLabel:
-            name: 'first'
-            text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
-            title:"What is Lorem Ipsum?"
+            text: "[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Yesterday's Visitor \n           Count[/color][/font]"
+            markup: True
+            font_style: 'H3'
+            pos_hint: {'center_x': .6, 'center_y': .55}
+        Image:
+            source: './assets/qr_lobby.png'
+            size_hint_y: None  # Tells the layout to ignore the size_hint in y dir
+            height: dp(400)
+            pos_hint: {'center_x': .23, 'center_y': .3}
         MDLabel:
-            name: 'second'
-            text: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
-            title:"Why do we use it?"
+            text: "[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Scan me for instructions![/color][/font]"
+            markup: True
+            font_style: 'H5'
+            pos_hint: {'center_x': .63, 'center_y': .18}
+<ColoredLabel@Label>:
+    size: (200, 200)
+    pos: (250, 550)
+
+    canvas.before:
+        Color:
+            rgba: app.colors(0)
+        Ellipse:
+            pos: self.pos
+            size: (200, 200)
+            angle_start: 0
+            angle_end: 360
+
+
+<RightSide@BoxLayout>
+    pos_hint: {'center_x': 1.2, 'center_y': .8}    
+    spacing: '20sp'
+    orientation: 'vertical'
+
+    FloatLayout:
         MDLabel:
-            name: 'third'
-            text: "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
-            title:"Where does it come from?"
+            text: '[font=./assets/fonts/Rubik-SemiBold.ttf][color=#ffffff]What to do?[/color][/font]'
+            markup: True
+            font_style: 'H2'
+            pos_hint: {'center_x': .45, 'center_y': .2}
+
+
+    MDRaisedButton:
+        text: f"[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Scan[/color][/font]"
+        font_size: "18sp"
+        size_hint_x: .1
+        md_bg_color:app.colors(1)
+        on_release: app.root.current = 'scanner'
+
+    MDRaisedButton:
+        text: f"[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Export[/color][/font]"
+        font_size: "18sp"
+        size_hint_x: .1
+        md_bg_color:app.colors(1)
+
+    MDRaisedButton:
+        text: f"[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]About[/color][/font]"
+        font_size: "18sp"
+        size_hint_x: .1
+        md_bg_color:app.colors(1)
+
+    MDRaisedButton:
+        text: f"[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Logout[/color][/font]"
+        markup: True
+        font_size: "18sp"
+        size_hint_x: .1
+        md_bg_color: app.colors(1)

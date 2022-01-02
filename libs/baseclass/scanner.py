@@ -11,6 +11,9 @@ from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.properties import StringProperty
 import mysql
+from kivymd_extensions.akivymd import *
+from kivymd.uix.behaviors import RoundedRectangularElevationBehavior
+from kivymd.uix.card import MDCard
 
 Builder.load_file('./libs/kv/scanner.kv')
 
@@ -21,9 +24,16 @@ class Scanner(Screen):
     def __init__(self, **kwargs):
         super(Scanner, self).__init__(**kwargs)
         self.record_scene = True
-        
+
+    def callback_function(self, dt):
+        self.ids.board.load_next(mode='next')
+
+        #time.sleep(3)
+        Clock.schedule_once(self.callback_function, 3)
+
     def on_enter(self, *args):
         threading.Thread(target=self.start_cam, daemon=True).start()
+        Clock.schedule_once(self.callback_function, 3)
 
     def start_cam(self):
         cam = cv2.VideoCapture(0)
@@ -38,12 +48,12 @@ class Scanner(Screen):
                 data_ret = barcode.data.decode('utf-8')
                 read_data = data_ret.split(';')
 
-                find_array = np.array([barcode.polygon],np.int32)
-                find_array = find_array.reshape((-1,1,2))
-                cv2.polylines(img_flip, [find_array], True, (255,0,255),5)
-                find_array2 = barcode.rect
-                cv2.putText(img_flip, read_data[0], (find_array2[0], find_array2[1]),
-                            cv2.FONT_HERSHEY_SIMPLEX, 2,(255,0,255),2)
+                # find_array = np.array([barcode.polygon],np.int32)
+                # find_array = find_array.reshape((-1,1,2))
+                # cv2.polylines(img_flip, [find_array], True, (255,0,255),5)
+                # find_array2 = barcode.rect
+                # cv2.putText(img_flip, read_data[0], (find_array2[0], find_array2[1]),
+                #             cv2.FONT_HERSHEY_SIMPLEX, 2,(255,0,255),2)
                 
                 print(read_data)
                 if len(read_data) == 4:
@@ -115,12 +125,32 @@ class Scanner(Screen):
         
         if len(res) == 1:
             cur.execute(f"UPDATE customers SET time_out = '{dt}', status = 'Out'")
+            self.ids.progress_relative.current_percent -= 1
             
         else:
             cur.execute(f"""INSERT INTO customers (name, age, address, number,
                                  time_in, time_out, status) VALUES 
                                  (%s, %s, %s, %s, '{dt}', NULL, 'In')
                                  """, data)
-
+            self.ids.progress_relative.current_percent += 1
         conn.commit()
         conn.close()
+
+
+class OnBoarding(Screen):
+    def on_enter(self):
+        Clock.schedule_once(self.callback_function, 3)
+        print('hiiiiii')
+
+    def callback_function(self, dt):
+        self.root.ids.board.load_next(mode='next')
+        #time.sleep(3)
+        Clock.schedule_once(self.callback_function, 3)
+
+    def finish_callback(self):
+        pass
+
+
+
+class MyCard(MDCard, RoundedRectangularElevationBehavior):
+    text = StringProperty('')

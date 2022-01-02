@@ -1,28 +1,280 @@
-<Scanner>:
+<Scanner>
     name: 'scanner'
+    on_leave:
+        progress_relative = 0
+        progress_percent = 0
 
-    MDGridLayout:
-        rows: 4
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "./assets/app_bg.png"
 
-        MDLabel:
-            text_color: 0, 0, 1, 1
-            text: "Test Webcam"
-            size_hint: 1, 1
-            halign: 'center'
+
+    Carousel:
+        id: board
+        size_hint: .5, 1
+        direction: 'right'
+        loop: True
         
-        Image:
-            id: cam_respo
-            size_hint: 1, 1
-            allow_strecth: True
-            keep_ratio: True
+        MyCard:
+            size_hint: .6, .6
+            style: 'filled'
+            radius: [36,]
+            pos_hint: {"center_x": .5, "center_y": .5}
+            orientation: 'vertical'
 
-        MDLabel:
-            text_color: 0, 0, 1, 1
-            text: root.qr_reading
-            size_hint: 1, 1
-            halign: 'center'
+            canvas:
+                Color:
+                    rgba: app.colors(0)
+                RoundedRectangle:
+                    radius: [36,]
+                    size: self.size
+                    pos: self.pos
+            MDLabel:
+                text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Always wear your facemask[/color][/font]'
+                markup: True
+                halign: 'center'
+                font_style: 'H5'
 
-        MDFlatButton:
-            text: 'Back'
-            on_release: root.stop_respo()
-            halign: 'center'
+            FloatLayout:
+                    
+                Image:
+                    size_hint_y: None  # Tells the layout to ignore the size_hint in y dir
+                    height: dp(275)
+                    source: './assets/mask.jpg'
+                    pos_hint: {'center_x': .5, 'center_y': .8}
+
+        MyCard:
+            size_hint: .6, .6
+            style: 'filled'
+            radius: [36,]
+            pos_hint: {"center_x": .5, "center_y": .5}
+            orientation: 'vertical'
+
+            canvas:
+                Color:
+                    rgba: app.colors(0)
+                RoundedRectangle:
+                    radius: [36,]
+                    size: self.size
+                    pos: self.pos
+
+            MDLabel:
+                text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Avoid crowded places[/color][/font]'
+                markup: True
+                halign: 'center'
+                font_style: 'H5' 
+            
+            FloatLayout:
+                Image:
+                    size_hint_y: None  # Tells the layout to ignore the size_hint in y dir
+                    height: dp(250)
+                    source: './assets/crowded.png'      
+                    pos_hint: {'center_x': .5, 'center_y': .8}
+        MyCard:
+            size_hint: .6, .6
+            style: 'filled'
+            radius: [36,]
+            pos_hint: {"center_x": .5, "center_y": .5}
+            orientation: 'vertical'
+            canvas:
+                Color:
+                    rgba: app.colors(0)
+                RoundedRectangle:
+                    radius: [36,]
+                    size: self.size
+                    pos: self.pos
+
+            MDLabel:
+                text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Observe social distancing[/color][/font]'
+                markup: True
+                halign: 'center'
+                font_style: 'H5'    
+
+            FloatLayout:       
+                Image:
+                    size_hint_y: None  # Tells the layout to ignore the size_hint in y dir
+                    height: dp(250)
+                    source: './assets/social_distancing.png'          
+                    pos_hint: {'center_x': .5, 'center_y': .8}
+
+        MyCard:
+            size_hint: .6, .6
+            style: 'filled'
+            radius: [36,]
+            pos_hint: {"center_x": .5, "center_y": .5}
+            orientation: 'vertical'
+            canvas:
+                Color:
+                    rgba: app.colors(0)
+                RoundedRectangle:
+                    radius: [36,]
+                    size: self.size
+                    pos: self.pos
+
+            FloatLayout:
+                MDIconButton:
+                    icon: 'virus'
+                    pos_hint: {"center_x": .2, "center_y": .8}
+                    user_font_size: "64sp"
+                    theme_text_color: "Custom"
+                    text_color: app.colors(2)
+
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Active Cases:[/color][/font]'
+                    markup: True
+                    font_style: 'Body1'
+                    pos_hint: {"center_x": .85, "center_y": .83}
+                
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]156000[/color][/font]'
+                    markup: True
+                    font_style: 'H5'
+                    pos_hint: {"center_x": .85, "center_y": .78}
+
+                ##############################################
+                MDIconButton:
+                    icon: 'emoticon-dead'
+                    pos_hint: {"center_x": .2, "center_y": .5}
+                    user_font_size: "64sp"
+                    theme_text_color: "Custom"
+                    text_color: app.colors(2)
+
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Deaths:[/color][/font]'
+                    markup: True
+                    font_style: 'Body1'
+                    pos_hint: {"center_x": .85, "center_y": .53}
+                
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]156000[/color][/font]'
+                    markup: True
+                    font_style: 'H5'
+                    pos_hint: {"center_x": .85, "center_y": .48}
+                
+                ##################################################
+                MDIconButton:
+                    icon: 'face-mask-outline'
+                    pos_hint: {"center_x": .2, "center_y": .2}
+                    user_font_size: "64sp"
+                    theme_text_color: "Custom"
+                    text_color: app.colors(2)
+
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Recovered:[/color][/font]'
+                    markup: True
+                    font_style: 'Body1'
+                    pos_hint: {"center_x": .85, "center_y": .23}
+                
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]156000[/color][/font]'
+                    markup: True
+                    font_style: 'H5'
+                    pos_hint: {"center_x": .85, "center_y": .18}
+
+        MyCard:
+            size_hint: .6, .6
+            style: 'filled'
+            radius: [36,]
+            pos_hint: {"center_x": .5, "center_y": .5}
+            orientation: 'vertical'
+            canvas:
+                Color:
+                    rgba: app.colors(0)
+                RoundedRectangle:
+                    radius: [36,]
+                    size: self.size
+                    pos: self.pos  
+
+            FloatLayout:
+                MDIconButton:
+                    icon: 'account'
+                    pos_hint: {"center_x": .2, "center_y": .8}
+                    user_font_size: "64sp"
+                    theme_text_color: "Custom"
+                    text_color: app.colors(2)
+
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Total Cases:[/color][/font]'
+                    markup: True
+                    font_style: 'Body1'
+                    pos_hint: {"center_x": .85, "center_y": .83}
+                
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]156000[/color][/font]'
+                    markup: True
+                    font_style: 'H5'
+                    pos_hint: {"center_x": .85, "center_y": .78}
+
+                ##############################################
+                MDIconButton:
+                    icon: 'grave-stone'
+                    pos_hint: {"center_x": .2, "center_y": .5}
+                    user_font_size: "64sp"
+                    theme_text_color: "Custom"
+                    text_color: app.colors(2)
+
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Total Deaths:[/color][/font]'
+                    markup: True
+                    font_style: 'Body1'
+                    pos_hint: {"center_x": .85, "center_y": .53}
+                
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]156000[/color][/font]'
+                    markup: True
+                    font_style: 'H5'
+                    pos_hint: {"center_x": .85, "center_y": .48}
+                
+                ##################################################
+                MDIconButton:
+                    icon: 'medical-bag'
+                    pos_hint: {"center_x": .2, "center_y": .2}
+                    user_font_size: "64sp"
+                    theme_text_color: "Custom"
+                    text_color: app.colors(2)
+
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]Total Recovered:[/color][/font]'
+                    markup: True
+                    font_style: 'Body1'
+                    pos_hint: {"center_x": .85, "center_y": .23}
+                
+                MDLabel:
+                    text: '[font=./assets/fonts/Rubik-Medium.ttf][color=#ffffff]156000[/color][/font]'
+                    markup: True
+                    font_style: 'H5'
+                    pos_hint: {"center_x": .85, "center_y": .18}        
+
+    Image:
+        id: cam_respo
+        size_hint_y: None  # Tells the layout to ignore the size_hint in y dir
+        height: dp(400)
+        allow_strecth: True
+        keep_ratio: True
+        pos: (400, 300)
+    
+    MDLabel:
+        text: '[color=#ffffff]Visitor Count[/color]'
+        markup: True
+        font_style: 'H3'
+        pos_hint: {'center_x': 1.18, 'center_y': .3}
+
+    AKCircularProgress:
+        id: progress_relative
+        current_percent: 1
+        pos_hint: {"center_x": .75, "center_y": .17}
+        size_hint: None, None
+        size: dp(100), dp(100)
+        line_width: '6dp'
+        # percent_type: "percent"
+        start_deg: 240
+        end_deg: 480
+        percent_type: "relative"
+        max_percent: 100
+        percent_size: '25dp'
+        background_line_width: '3dp'
+        circle_color: [1,1,1,1]
+        background_circle_color: [1,1,1,1]
+        percent_color: [1,1,1,1]

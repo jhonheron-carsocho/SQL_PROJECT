@@ -23,34 +23,46 @@ class Loading(FloatLayout):
             item.angle = 0
 
 class Login(Screen):
-    usr_name = ObjectProperty()
-    usr_pass = ObjectProperty()
+    pass
 
-    def create_db(self):
-        db = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            passwd='excalibur',
-            database='storeDB'
-        )
+class LoginForm(FloatLayout):
+    usr_name = ObjectProperty(None)
+    usr_pass = ObjectProperty(None)
 
-        mycursor = db.cursor()
+    def usr_login(self):
+        if self.usr_name.text == 'admin' and self.usr_pass.text == 'admin':
+            print('titi')
+            return True
+        else: 
+            print('hahah')
+            return False
 
-        mycursor.execute("""CREATE TABLE IF NOT EXISTS customers (
-                id INT NOT NULL AUTO_INCREMENT,
-                name VARCHAR(250) NOT NULL UNIQUE,
-                address VARCHAR(250) NOT NULL,
-                number INT(11) NOT NULL UNIQUE,
-                timein DATETIME,
-                timeout DATETIME,
-                status VARCHAR(11),
-                PRIMARY KEY (id)
-            );
-        """)
 
-        mycursor.execute("DESCRIBE customers")
+    # def create_db(self):
+    #     db = mysql.connector.connect(
+    #         host='localhost',
+    #         user='root',
+    #         passwd='1234',
+    #         database='storeDB'
+    #     )
 
-        for x in mycursor:
-            print(x)
+    #     mycursor = db.cursor()
+
+    #     mycursor.execute("""CREATE TABLE IF NOT EXISTS customers (
+    #             id INT NOT NULL AUTO_INCREMENT,
+    #             name VARCHAR(250) NOT NULL UNIQUE,
+    #             address VARCHAR(250) NOT NULL,
+    #             number INT(11) NOT NULL UNIQUE,
+    #             timein DATETIME,
+    #             timeout DATETIME,
+    #             status VARCHAR(11),
+    #             PRIMARY KEY (id)
+    #         );
+    #     """)
+
+    #     mycursor.execute("DESCRIBE customers")
+
+    #     for x in mycursor:
+    #         print(x)
 
     

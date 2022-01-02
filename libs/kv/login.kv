@@ -24,6 +24,7 @@
             source: "./assets/app_bg.png"
 
     FloatLayout:
+
         Loading:
 
         MDLabel:
@@ -37,9 +38,9 @@
 
         LoginForm:
 
-
-
-<LoginForm@FloatLayout>
+<LoginForm>
+    usr_name: usr_name
+    usr_pass: usr_pass
 
     MDLabel:
         text: "[font=./assets/fonts/Rubik-Light.ttf]Welcome[/font]"
@@ -50,27 +51,29 @@
         pos_hint: {'center_x': 1.15, 'center_y': .7 }
 
     MDTextFieldRect:
+        id: usr_name
         font_size: '28sp'
         size_hint: .3, .05
         hint_text: "Username or Email"
-        height: "30dp"
+        height: dp(30)
         pos_hint: {'center_x': .75, 'center_y': .5 }
 
     MDTextFieldRect:
+        id: usr_pass
         font_size: '28sp'
         hint_text: "Password"
         size_hint: .3, .05
-        height: "30dp"
+        height: dp(30)
         pos_hint: {'center_x': .75, 'center_y': .4}
         password: True
         password_mask: '•'
 
     MDRaisedButton:
-        text: '[font=./assets/fonts/Rubik-SemiBold.ttf][color=#ffffff]Login[/color][/font]'
+        text: '[font=./assets/fonts/Rubik-SemiBold.ttf][color=#ffffff]      Login       [/color][/font]'
         markup: True
         elevation: 16
         md_bg_color: rgba('#09AF79')
-        font_style: 'H5'
+        font_size: '32sp'
         pos_hint: {'center_x': .75, 'center_y': .3}
-        size_hint: .1, None
-        on_release: print('hello')
+        #size_hint_x: .1
+        on_release: if root.usr_login() == True: app.root.current = 'lobby'
