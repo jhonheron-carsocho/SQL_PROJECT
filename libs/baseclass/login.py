@@ -31,12 +31,14 @@ class LoginForm(FloatLayout):
 
     def usr_login(self):
         if self.usr_name.text == 'admin' and self.usr_pass.text == 'admin':
-            print('titi')
+            self.usr_name.text = ''
+            self.usr_pass.text = ''
             return True
         else: 
-            print('hahah')
+            self.usr_name.text = ''
+            self.usr_pass.text = ''
             return False
-
+        
 
     # def create_db(self):
     #     db = mysql.connector.connect(
