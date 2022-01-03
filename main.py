@@ -4,7 +4,7 @@ from kivy.utils import rgba
 from kivymd.app import MDApp
 from kivy.lang.builder import Builder
 from kivy.properties import StringProperty, NumericProperty
-from libs.baseclass import login, lobby, scanner
+from libs.baseclass import login, lobby, scanner, stats, db_conn
 from kivy.core.window import Window
 
 Window.fullscreen = False

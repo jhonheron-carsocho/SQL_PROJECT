@@ -14,6 +14,7 @@ import mysql
 from kivymd_extensions.akivymd import *
 from kivymd.uix.behaviors import RoundedRectangularElevationBehavior
 from kivymd.uix.card import MDCard
+from libs.baseclass import db_conn
 
 Builder.load_file('./libs/kv/scanner.kv')
 
@@ -87,22 +88,7 @@ class Scanner(Screen):
         self.ids.cam_respo.texture = texture
 
     def data_base(self, data):
-        try:
-            conn = mysql.connector.connect(
-                            host = '127.0.0.1',
-                            user = 'root',
-                            passwd = '1234',
-                            database="sql_project"
-                            )
-       
-        except (mysql.connector.errors.ProgrammingError):
-            conn = mysql.connector.connect(
-                        host = '127.0.0.1',
-                        user = 'root',
-                        passwd = '1234'
-                        )
-            cur = conn.cursor()
-            cur.execute("CREATE DATABASE sql_project")   
+        conn = db_conn.data_base()  
 
         cur = conn.cursor()   
 
