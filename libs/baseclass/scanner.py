@@ -9,19 +9,30 @@ import time
 from kivy.graphics.texture import Texture
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import Screen
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty
 import mysql
 from kivymd_extensions.akivymd import *
 from kivymd.uix.behaviors import RoundedRectangularElevationBehavior
 from kivymd.uix.card import MDCard
-from libs.baseclass import db_conn
-
+import requests
 Builder.load_file('./libs/kv/scanner.kv')
+
 
 
 class Scanner(Screen):
     qr_reading = StringProperty('')
+    url = "https://corona.lmao.ninja/v2/countries/philippines"
 
+    json_data = requests.get(url).json()
+
+    cases = ObjectProperty(str(json_data['cases']))
+    cases_today = ObjectProperty(str(json_data['todayCases']))
+    deaths = ObjectProperty(str(json_data['deaths']))
+    deaths_today = ObjectProperty(str(json_data['todayDeaths']))
+    recovered = ObjectProperty(str(json_data['recovered']))
+    recovered_today = ObjectProperty(str(json_data['todayRecovered']))
+    active = str(json_data['active'])
+ 
     def __init__(self, **kwargs):
         super(Scanner, self).__init__(**kwargs)
         self.record_scene = True
@@ -88,7 +99,22 @@ class Scanner(Screen):
         self.ids.cam_respo.texture = texture
 
     def data_base(self, data):
-        conn = db_conn.data_base()  
+        try:
+            conn = mysql.connector.connect(
+                            host = '127.0.0.1',
+                            user = 'root',
+                            passwd = '1234',
+                            database="sql_project"
+                            )
+       
+        except (mysql.connector.errors.ProgrammingError):
+            conn = mysql.connector.connect(
+                        host = '127.0.0.1',
+                        user = 'root',
+                        passwd = '1234'
+                        )
+            cur = conn.cursor()
+            cur.execute("CREATE DATABASE sql_project")   
 
         cur = conn.cursor()   
 

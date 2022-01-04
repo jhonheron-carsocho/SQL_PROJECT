@@ -27,8 +27,6 @@ class MyApp(MDApp):
         kv_run = Builder.load_file("main.kv")
         return kv_run
         
-
-
     def colors(self, color_code):
         if color_code == 0:
             color_rgba = '#35353f'
