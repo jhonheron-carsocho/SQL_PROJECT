@@ -22,7 +22,9 @@
             icon_color: app.colors(0)
             pos_hint: {'center_x':.05, 'center_y': .95}
             on_release: app.root.current = 'lobby'
-    
+
+
+
     Carousel:
         id: board
         size_hint: .5, 0.9
@@ -47,7 +49,7 @@
                     
                 Image:
                     size_hint_y: None  # Tells the layout to ignore the size_hint in y dir
-                    height: dp(275)
+                    height: dp(250)
                     source: './assets/mask.png'
                     pos_hint: {'center_x': .5, 'center_y': .8}
 
@@ -244,20 +246,30 @@
         font_style: 'H3'
         pos_hint: {'center_x': 1.13, 'center_y': .3}
 
-    AKCircularProgress:
-        id: progress_relative
-        current_percent: 1
-        pos_hint: {"center_x": .75, "center_y": .17}
-        size_hint: None, None
-        size: dp(100), dp(100)
-        line_width: '6dp'
-        # percent_type: "percent"
-        start_deg: 240
-        end_deg: 480
-        percent_type: "relative"
-        max_percent: 100
-        percent_size: '25dp'
-        background_line_width: '3dp'
-        circle_color: [1,1,1,1]
-        background_circle_color: [1,1,1,1]
-        percent_color: [1,1,1,1]
+    MDLabel:
+        text: str(root.visitor_count)+ '/'+ str(root.capacity_limit)
+        markup: True
+        font_name: './assets/fonts/Rubik-Bold.ttf'
+        theme_text_color: 'Custom'
+        text_color: app.colors(2)
+        font_style: 'H2'
+        pos_hint: {'center_x': 1.23, 'center_y': .2}
+
+
+    # AKCircularProgress:
+    #     id: progress_relative
+    #     current_percent: 1
+    #     pos_hint: {"center_x": .75, "center_y": .17}
+    #     size_hint: None, None
+    #     size: dp(100), dp(100)
+    #     line_width: '6dp'
+    #     # percent_type: "percent"
+    #     start_deg: 240
+    #     end_deg: 480
+    #     percent_type: "relative"
+    #     max_percent: root.get_int()
+    #     percent_size: '25dp'
+    #     background_line_width: '3dp'
+    #     circle_color: [1,1,1,1]
+    #     background_circle_color: [1,1,1,1]
+    #     percent_color: [1,1,1,1]

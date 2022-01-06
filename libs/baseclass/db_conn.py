@@ -18,6 +18,7 @@ def data_base():
                     )
         cur = conn.cursor()
         cur.execute("CREATE DATABASE sql_project")
+        
     cur = conn.cursor()  
     cur.execute("""CREATE TABLE IF NOT EXISTS customers (
                         id MEDIUMINT NOT NULL AUTO_INCREMENT,
